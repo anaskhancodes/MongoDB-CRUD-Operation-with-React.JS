@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onload="getAllPoat()">
+    <h1>Hello Pincone data base</h1>
+
+    <form onsubmit="createPost(); return false">
+        <label for="postTitle">Post Title</label>
+        <input type="text" name="postTitle" id="postTitle">
+
+        <br>
+        <br>
+
+        <label for="postText">Post Text</label>
+        <input type="text" name="postText" id="postText">
+
+        <br>
+        <br>
+
+        <button type="submit">Submit Post</button>
+
+        <br>
+        <br>
+    </form>
+
+    <div id="result"></div>
+    <br>
+    <div id="post"></div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        window.createPost = function () {
+
+            let postTitle = document.querySelector("#postTitle").value;
+            let postText = document.querySelector("#postText").value;
+
+
+            axios.post(`/api/v1/post`, {
+                title: postTitle,
+                text: postText
+            })
+                .then(function (response) {
+                    // handle success 
+                    console.log(response.data);
+                    document.querySelector("#result").innerHTML = response.data;
+                    getAllPoat();
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error.data);
+                    document.querySelector("#result").innerHTML = "error in post submision"
+                })
+        }
+
+        window.getAllPoat = function () {
+
+            axios.get(`/api/v1/posts`)
+                .then(function (response) {
+                    // handle success 
+                    console.log(response.data);
+                    document.querySelector("#post").innerHTML = JSON.stringify(response.data);
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error.data);
+                    document.querySelector("#post").innerHTML = "error in post submision"
+                })
+        }
+
+
+
+    </script>
+</body>
+
+</html>
