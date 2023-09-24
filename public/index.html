@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 
-<body onload="getAllPoat()">
+<body onload="getAllPost()">
     <h1>Hello Pincone data base</h1>
 
     <form onsubmit="createPost(); return false">
@@ -35,7 +35,6 @@
 
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
@@ -54,7 +53,7 @@
                     // handle success 
                     console.log(response.data);
                     document.querySelector("#result").innerHTML = response.data;
-                    getAllPoat();
+                    getAllPost();
 
                 })
                 .catch(function (error) {
@@ -64,13 +63,48 @@
                 })
         }
 
-        window.getAllPoat = function () {
+        window.getAllPost = function () {
 
             axios.get(`/api/v1/posts`)
                 .then(function (response) {
                     // handle success 
                     console.log(response.data);
-                    document.querySelector("#post").innerHTML = JSON.stringify(response.data);
+
+                    let postHTML = ``
+                    // 
+                    response.data.map((eachPost) => {
+                        postHTML +=
+                            `<div> 
+                                <h2>${eachPost.title}</h2> 
+                                <p>${eachPost.text}</p> 
+
+                                <button onclick="delPost('${eachPost.id}')">Delete</button>   <button>Edit</button>
+                            </div> 
+
+                            <br />`
+                    })
+                    // 
+                    document.querySelector("#post").innerHTML = postHTML
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error.data);
+                    document.querySelector("#post").innerHTML = "error in post submision"
+                })
+        }
+
+
+        window.delPost = function (postId) {
+
+            console.log("delete", postId)
+
+            axios.delete(`/api/v1/post/${postId}`)
+                .then(function (response) {
+                    // handle success 
+                    console.log(response.data);
+
+                    getAllPost();
 
                 })
                 .catch(function (error) {
