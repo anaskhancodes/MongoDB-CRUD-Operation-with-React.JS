@@ -1,4 +1,4 @@
-// console.log("Pinecone express server>>>>>>>> ")
+// console.log("MongoDb express server>>>>>>>> ")
 
 import express from 'express';
 import cors from 'cors';

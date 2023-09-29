@@ -5,10 +5,7 @@ let router = express.Router()
 
 
 let posts = [{
-    id: nanoid(),
-    title: "Anas khan",
-    text: "khannnnnn"
-
+    
 }]
 
 
@@ -27,20 +24,20 @@ router.post("/post", (req, res, next) => {
     })
 
 
-    console.log('This Pinecone Post ', new Date);
+    console.log('This MongoDb Post ', new Date);
     // console.log(posts)
 })
 
 router.get("/posts", (req, res, next) => {
-    // res.send('This Pinecone Posts ' + new Date);
+    // res.send('This MongoDb Posts ' + new Date);
     res.send(posts);
-    console.log('This Pinecone Posts ', new Date);
+    console.log('This MongoDb Posts ', new Date);
 })
 
 
 
 router.get('/post/:postId', (req, res, next) => {
-    console.log('This Pinecone Post with ID', new Date);
+    console.log('This MongoDb Post with ID', new Date);
 
     if (req.params.postId) {
         res.status(403).send('post ID must be valid ')
@@ -56,13 +53,29 @@ router.get('/post/:postId', (req, res, next) => {
     res.send("Post not found => " + req.params.postId);
 })
 
-router.put("/post/:userId:postId", (req, res, next) => {
-    res.send('This Pinecone Post Update ' + new Date);
-    console.log('This Pinecone Post Update ', new Date);
+router.put("/post/:postId", (req, res, next) => {
+    // res.send('This MongoDb Post Update ' + new Date);
+
+    if (!req.params.postId || !req.params.title || !req.params.text) {
+        res.status(403).send('post ID must be valid ')
+    }
+    
+    for (let i = 0; i < posts.length; i++) {
+        if (posts[i].id === req.params.postId) {
+            
+            posts[i] = {
+                text: req.params.text,
+                title: req.params.title
+            }
+            res.send('Post is Updated ' + req.params.postId);
+            return;
+        }
+    }
+    console.log('This MongoDb Post Update ', new Date);
 })
 
 router.delete("/post/:postId", (req, res, next) => {
-    // res.send('This Pinecone Post Delete ' + new Date);
+    // res.send('This MongoDb Post Delete ' + new Date);
     
     if (!req.params.postId) {
         res.status(403).send('post ID must be valid ')
@@ -75,7 +88,7 @@ router.delete("/post/:postId", (req, res, next) => {
             return;
         }
     }
-    console.log('This Pinecone Post Delete ', new Date);
+    console.log('This MongoDb Post Delete ', new Date);
 })
 
 export default router
