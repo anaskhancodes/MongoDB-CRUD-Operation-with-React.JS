@@ -1,37 +1,47 @@
 import express from 'express';
 import { nanoid } from 'nanoid';
-let router = express.Router()
+import { client } from '../../mongoDb.mjs';
+
+const db = client.db("crudDb");
+const col = db.collection("posts");
+
+let router = express.Router();
 
 
 
 let posts = [{
-    
+    id: nanoid(),
+    title: "Anas",
+    text: "khan"
 }]
 
 
-router.post("/post", (req, res, next) => {
+router.post("/post", async (req, res, next) => {
     res.send('Post creat');
 
-    if ( !req.body.title || !req.body.text) {
+    if (!req.body.title || !req.body.text) {
         res.status(403).send("Required parameter missing")
         return
     }
-
-    posts.unshift({
+    const insertResponse = await col.insertOne({
         id: nanoid(),
         title: req.body.title,
         text: req.body.text
     })
 
 
-    console.log('This MongoDb Post ', new Date);
+console.log("insertResponse", insertResponse )
+    // console.log('This MongoDb Post ', new Date);
     // console.log(posts)
 })
 
-router.get("/posts", (req, res, next) => {
-    // res.send('This MongoDb Posts ' + new Date);
-    res.send(posts);
-    console.log('This MongoDb Posts ', new Date);
+router.get("/posts", async(req, res, next) => {
+    
+    const cursor = col.find({});
+    let result = await cursor.toArray();
+    
+    res.send(result);
+    console.log("result" , result)
 })
 
 
@@ -49,42 +59,47 @@ router.get('/post/:postId', (req, res, next) => {
             return;
         }
     }
-    
+
     res.send("Post not found => " + req.params.postId);
 })
+
 
 router.put("/post/:postId", (req, res, next) => {
     // res.send('This MongoDb Post Update ' + new Date);
 
-    if (!req.params.postId || !req.params.title || !req.params.text) {
-        res.status(403).send('post ID must be valid ')
+    const postId = req.params.postId; // Get the postId from the URL parameters
+    const updatedTitle = req.body.title; // Get the updated title from the request body
+    const updatedText = req.body.text;   // Get the updated text from the request body
+
+    if (!postId || !updatedTitle || !updatedText) {
+        res.status(403).send('Post ID, title, and text must be provided.');
+        return;
     }
-    
+
     for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === req.params.postId) {
-            
-            posts[i] = {
-                text: req.params.text,
-                title: req.params.title
-            }
-            res.send('Post is Updated ' + req.params.postId);
+        if (posts[i].id === postId) {
+            posts[i].text = updatedText;
+            posts[i].title = updatedTitle;
+            res.send('Post is Updated ' + postId);
             return;
         }
     }
+
     console.log('This MongoDb Post Update ', new Date);
-})
+});
+
 
 router.delete("/post/:postId", (req, res, next) => {
     // res.send('This MongoDb Post Delete ' + new Date);
-    
+
     if (!req.params.postId) {
         res.status(403).send('post ID must be valid ')
     }
-    
+
     for (let i = 0; i < posts.length; i++) {
         if (posts[i].id === req.params.postId) {
             res.send("Post deleted from => " + req.params.postId);
-            posts.splice(i,1)
+            posts.splice(i, 1)
             return;
         }
     }
