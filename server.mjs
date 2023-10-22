@@ -35,5 +35,5 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`PinconeDB listening on PORT ${PORT}`);
+  console.log(`MongoDB listening on PORT ${PORT}`);
 })

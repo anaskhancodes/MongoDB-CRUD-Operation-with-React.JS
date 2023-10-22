@@ -1,6 +1,7 @@
 import express from 'express';
 import { nanoid } from 'nanoid';
 import { client } from '../../mongoDb.mjs';
+import { ObjectId } from 'mongodb';
 
 const db = client.db("crudDb");
 const col = db.collection("posts");
@@ -15,6 +16,9 @@ let posts = [{
     text: "khan"
 }]
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
 
 router.post("/post", async (req, res, next) => {
     res.send('Post creat');
@@ -23,87 +27,129 @@ router.post("/post", async (req, res, next) => {
         res.status(403).send("Required parameter missing")
         return
     }
-    const insertResponse = await col.insertOne({
-        id: nanoid(),
-        title: req.body.title,
-        text: req.body.text
-    })
+
+    try {
+        const insertResponse = await col.insertOne({
+            title: req.body.title,
+            text: req.body.text
+        })
+
+        console.log("insertResponse", insertResponse)
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Server error, please try leter")
+    }
 
 
-console.log("insertResponse", insertResponse )
-    // console.log('This MongoDb Post ', new Date);
-    // console.log(posts)
 })
 
-router.get("/posts", async(req, res, next) => {
-    
-    const cursor = col.find({});
-    let result = await cursor.toArray();
-    
-    res.send(result);
-    console.log("result" , result)
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
+
+router.get("/posts", async (req, res, next) => {
+
+    const cursor = col.find({}).sort({_id: -1}).limit(100);
+
+    try {
+        let result = await cursor.toArray();
+        res.send(result);
+        console.log("result", result)
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Server error, please try leter")
+    }
 })
 
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 
-router.get('/post/:postId', (req, res, next) => {
+router.get('/post/:postId', async (req, res, next) => {
     console.log('This MongoDb Post with ID', new Date);
 
-    if (req.params.postId) {
+    if (!ObjectId.isValid(req.params.postId)) {
         res.status(403).send('post ID must be valid ')
+        return;
     }
 
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === req.params.postId) {
-            res.send(posts[i]);
-            return;
-        }
+    try {
+        let result = await col.findOne({ _id: new ObjectId(req.params.postId) });
+        res.send(result);
+        console.log("result", result)
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Server error, please try leter")
     }
-
-    res.send("Post not found => " + req.params.postId);
 })
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 
-router.put("/post/:postId", (req, res, next) => {
-    // res.send('This MongoDb Post Update ' + new Date);
+router.put("/post/:postId", async (req, res, next) => {
 
-    const postId = req.params.postId; // Get the postId from the URL parameters
-    const updatedTitle = req.body.title; // Get the updated title from the request body
-    const updatedText = req.body.text;   // Get the updated text from the request body
-
-    if (!postId || !updatedTitle || !updatedText) {
+    if (!ObjectId.isValid(req.params.postId)) {
+        res.status(403).send('post ID must be valid ')
+        return;
+    }
+    //-------------//
+    if (!req.body.title && !req.body.text) {
         res.status(403).send('Post ID, title, and text must be provided.');
         return;
     }
 
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === postId) {
-            posts[i].text = updatedText;
-            posts[i].title = updatedTitle;
-            res.send('Post is Updated ' + postId);
-            return;
-        }
+    let dataUpdated = {};
+    if (req.body.title) { dataUpdated.title = req.body.title };
+    if (req.body.text) { dataUpdated.text = req.body.text };
+
+    try {
+        const UpdateResponse = await col.updateOne(
+            {_id: new ObjectId(req.params .postId)},
+            { $set: dataUpdated }
+        );
+        
+
+        console.log("UpdateResponse", UpdateResponse);
+        res.send("post Updated");
+
+    } catch (e) {
+        console.log("error updating mongodb",e);
+        res.status(500).send("Server error, please try leter")
     }
+
 
     console.log('This MongoDb Post Update ', new Date);
 });
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 
-router.delete("/post/:postId", (req, res, next) => {
-    // res.send('This MongoDb Post Delete ' + new Date);
 
-    if (!req.params.postId) {
+router.delete("/post/:postId", async (req, res, next) => {
+    if (!ObjectId.isValid(req.params.postId)) {
         res.status(403).send('post ID must be valid ')
+        return;
     }
 
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === req.params.postId) {
-            res.send("Post deleted from => " + req.params.postId);
-            posts.splice(i, 1)
-            return;
-        }
+    try {
+        const deleteResponse = await col.deleteOne({ _id: new ObjectId(req.params.postId)});
+
+        console.log("deleteResponse", deleteResponse);
+        res.send("post Delete");
+
+    } catch (e) {
+        console.log("error deleting mongodb",e);
+        res.status(500).send("Server error, please try leter")
     }
+
+
+
     console.log('This MongoDb Post Delete ', new Date);
 })
 
-export default router
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
+
+export default router;
