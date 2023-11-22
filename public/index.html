@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
 
@@ -73,9 +74,12 @@
                     let postHTML = ``
                     // 
                     response.data.map((eachPost) => {
+                        const timeAgo = moment(eachPost.createdOn).fromNow();
+
                         postHTML +=
                             `<div id="card-${eachPost._id}"> 
-                                <h2>${eachPost.title}</h2> 
+                                <h2>${eachPost.title}</h2>
+                                <p>${timeAgo}</p>
                                 <p>${eachPost.text}</p> 
 
                                 <button onclick="delPost('${eachPost._id}')">Delete</button> 
@@ -156,6 +160,8 @@
 
 
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 </body>
 
 </html>
