@@ -9,6 +9,13 @@
 </head>
 
 <body onload="getAllPost()">
+
+    <!-- Add an element with an id to display user email -->
+    <!-- <header>
+        <h1>Welcome, <span id="userEmail"></span></h1>
+    </header> -->
+
+
     <h1>Hello MongoDB data base</h1>
 
     <form onsubmit="createPost(); return false">
@@ -66,7 +73,9 @@
 
         window.getAllPost = function () {
 
-            axios.get(`/api/v1/posts`)
+            axios.get(`/api/v1/posts`, {
+                withCredentials: true
+            })
                 .then(function (response) {
                     // handle success 
                     console.log(response.data);
@@ -94,7 +103,12 @@
                 })
                 .catch(function (error) {
                     // handle error
-                    console.log(error.data);
+                    console.log(error.response.status);
+
+                    if (error.response.status === 401) {
+                        window.location.href = "/login.html";
+                    }
+
                     document.querySelector("#post").innerHTML = "error in post submision"
                 })
         }

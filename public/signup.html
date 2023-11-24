@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Signup</h1>
+
+    <form id="signupInput">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" id="firstName" placeholder="First Name">
+
+        <br>
+        <br>
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" id="lastName" placeholder="Last Name">
+
+        <br>
+        <br>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="Email">
+
+        <br>
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password">
+
+        <br>
+        <br>
+
+        <button type="submit">Signup</button>
+
+        <br>
+        <br>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="module">
+        document.querySelector("#signupInput").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const firstName = document.querySelector("#firstName").value;
+            const lastName = document.querySelector("#lastName").value;
+            const email = document.querySelector("#email").value;
+            const password = document.querySelector("#password").value;
+
+            try {
+                const response = await axios.post("/api/v1/signup", {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                });
+
+                console.log("response", response.status);
+
+                if (response.status === 200) {
+                    console.log("Signup successful");
+                    const userEmail = response.data.email;
+                    window.location.href = "/index.html";
+
+                    // Display the user email in the header or any other part of your UI
+                    // const userEmailElement = document.getElementById("userEmail");
+                    // if (userEmailElement) {
+                    //     userEmailElement.textContent = `Welcome, ${userEmail}`;
+                    // }
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })
+    </script>
+</body>
+
+</html>

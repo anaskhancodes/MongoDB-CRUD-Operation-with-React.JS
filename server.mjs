@@ -23,6 +23,8 @@ app.use(cookieParser());
 
 app.use("/api/v1", autsRouter);
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.use((req, res, next) => {
   const token = req.cookies.token;
 
@@ -56,7 +58,6 @@ app.use('/api/v1', feedRouter);
 
 
 
-app.use(express.static(path.join(__dirname, 'public')))
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

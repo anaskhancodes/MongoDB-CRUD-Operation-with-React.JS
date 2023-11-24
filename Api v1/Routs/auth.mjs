@@ -46,11 +46,12 @@ router.post('/login', async (req, res, next) => {
                     firstName: result.firstName,
                     lastName: result.lastName,
                     email: req.body.email,
-                }, process.env.SECRET, {expiresIn: "720h"});
+                }, process.env.SECRET, { expiresIn: "720h" });
 
                 res.cookie("token", token, { // Cookies
                     httpOnly: true,
                     secure: true,
+                    // expires: new Date(Date.now() + 720 * 60 * 60 * 1000)
                 })
 
                 res.send({
@@ -109,8 +110,13 @@ router.post('/signup', async (req, res, next) => {
                 createdOn: new Date()
             })
 
+
             console.log("insertResponse", insertResponse);
-            res.send({ message: "SignUp successful" });
+
+            res.send({
+                message: "SignUp successful",
+                // email: req.body.email  // Add user email to the response
+            });
 
         } else {
             res.status(403).send({
