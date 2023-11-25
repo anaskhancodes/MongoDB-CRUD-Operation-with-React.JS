@@ -15,7 +15,7 @@ let router = express.Router();
 
 
 router.post("/post", async (req, res, next) => {
-    res.send('Post creat');
+    res.send('');
 
     if (!req.body.title || !req.body.text) {
         res.status(403).send("Required parameter missing")

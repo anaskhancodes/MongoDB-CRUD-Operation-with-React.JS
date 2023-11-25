@@ -22,7 +22,7 @@
         <br>
         <br>
         <label for="email">Email</label>
-        <input type="text" name="email" id="email" placeholder="Email">
+        <input type="email" name="email" id="email" placeholder="Email">
 
         <br>
         <br>
@@ -32,7 +32,7 @@
         <br>
         <br>
 
-        <button type="submit">Signup</button>
+        <button onclick="userName()" type="submit">Signup</button>
 
         <br>
         <br>
@@ -61,20 +61,16 @@
 
                 if (response.status === 200) {
                     console.log("Signup successful");
-                    const userEmail = response.data.email;
-                    window.location.href = "/index.html";
 
-                    // Display the user email in the header or any other part of your UI
-                    // const userEmailElement = document.getElementById("userEmail");
-                    // if (userEmailElement) {
-                    //     userEmailElement.textContent = `Welcome, ${userEmail}`;
-                    // }
+                    window.location.href = "/index.html";
                 }
             } catch (e) {
                 console.log(e);
             }
         })
     </script>
+
+<script src="updateName.js"></script>
 </body>
 
 </html>

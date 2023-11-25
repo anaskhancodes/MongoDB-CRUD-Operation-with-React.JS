@@ -1,0 +1,107 @@
+body{
+    background-color: rgb(24, 25, 26);
+}
+
+.post-card{
+    background-color: rgb(36, 37, 38);
+    color: white;
+    padding: 15px;
+    width: 500px;
+    margin-left: 30%;
+    margin-top: 50px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+.title-time{
+    display: flex;
+    justify-content:space-between;
+    /* align-items: center;  */
+    width: 500px;
+}
+
+.title-time h2{
+    /* background-color: #1a77fe; */
+    /* background-color: rgb(54, 55, 56); */
+    /* border: 1px solid rgb(54, 55, 56); */
+    width: 375px;
+    padding: 8px;
+    font-size: 20px;
+}
+
+.title-time .post-time{
+    margin-top: 30px;
+}
+
+.post-text{
+    background-color: rgb(54, 55, 56);
+    padding: 10px;
+    border-radius: 7px;
+}
+
+
+.form{
+    box-shadow: rgb(0, 0, 0) 0px 19px 38px, rgb(0, 0, 0) 0px 15px 12px;
+    background-color: rgb(54, 55, 56);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 860px;
+    margin-left: 18%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    padding: 10px;
+}
+
+label{
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+#postText,#postTitle {
+    overflow-y: hidden;
+    resize: none;
+    padding: 10px;
+}
+
+form button{
+    padding: 10px;
+    width: 150px;
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #1a77fe;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.del-btn{
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn{
+    padding: 10px;
+    background-color: rgb(3, 255, 3);
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 60px;
+    cursor: pointer;
+}
+
+.edit-form{
+    /* background-color: none; */
+    border: none;
+    box-shadow: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}

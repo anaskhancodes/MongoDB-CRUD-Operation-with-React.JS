@@ -37,8 +37,6 @@ app.use((req, res, next) => {
       firstName: decoded.firstName,
       lastName: decoded.lastName,
       email: decoded.email,
-      // createdOn: decoded.createdOn,
-      // expires: decoded.expires
     }
     next();
   } catch (err) {
@@ -53,8 +51,6 @@ app.use((req, res, next) => {
 app.use('/api/v1', postRouter);
 app.use('/api/v1', comentsRouter);
 app.use('/api/v1', feedRouter);
-// app.use('/api/v1', apiv1Routs);
-
 
 
 
