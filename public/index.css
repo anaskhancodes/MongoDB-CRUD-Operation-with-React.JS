@@ -1,8 +1,26 @@
-body{
-    background-color: rgb(24, 25, 26);
+body {
+    background: linear-gradient(-40deg, rgb(12, 3, 61),
+            rgb(5, 51, 63), rgb(17, 69, 82), rgb(32, 80, 48), rgb(2, 93, 116));
+    background-size: 400% 400%;
+    animation: bg 12s ease infinite;
 }
 
-.post-card{
+@keyframes bg {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+.post-card {
     background-color: rgb(36, 37, 38);
     color: white;
     padding: 15px;
@@ -13,36 +31,32 @@ body{
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
-.title-time{
+.title-time {
     display: flex;
-    justify-content:space-between;
-    /* align-items: center;  */
+    justify-content: space-between;
     width: 500px;
 }
 
-.title-time h2{
-    /* background-color: #1a77fe; */
-    /* background-color: rgb(54, 55, 56); */
-    /* border: 1px solid rgb(54, 55, 56); */
-    width: 375px;
+.title-time h2 {
+    width: 360px;
     padding: 8px;
     font-size: 20px;
 }
 
-.title-time .post-time{
+.title-time .post-time {
     margin-top: 30px;
 }
 
-.post-text{
+.post-text {
     background-color: rgb(54, 55, 56);
     padding: 10px;
     border-radius: 7px;
 }
 
 
-.form{
-    box-shadow: rgb(0, 0, 0) 0px 19px 38px, rgb(0, 0, 0) 0px 15px 12px;
-    background-color: rgb(54, 55, 56);
+.form {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    /* background-color: rgb(54, 55, 56); */
     color: white;
     display: flex;
     flex-direction: column;
@@ -56,18 +70,19 @@ body{
     padding: 10px;
 }
 
-label{
+label {
     margin-top: 20px;
     font-size: 25px;
 }
 
-#postText,#postTitle {
+#postText,
+#postTitle {
     overflow-y: hidden;
     resize: none;
     padding: 10px;
 }
 
-form button{
+form button {
     padding: 10px;
     width: 150px;
     font-size: 15px;
@@ -78,7 +93,7 @@ form button{
     cursor: pointer;
 }
 
-.del-btn{
+.del-btn {
     padding: 10px;
     background-color: red;
     color: white;
@@ -86,7 +101,7 @@ form button{
     cursor: pointer;
 }
 
-.edit-btn{
+.edit-btn {
     padding: 10px;
     background-color: rgb(3, 255, 3);
     color: rgb(0, 0, 0);
@@ -95,7 +110,7 @@ form button{
     cursor: pointer;
 }
 
-.edit-form{
+.edit-form {
     /* background-color: none; */
     border: none;
     box-shadow: none;

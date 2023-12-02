@@ -4,39 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="signup.css">
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Signup</h1>
 
-    <form id="signupInput">
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName" placeholder="First Name">
+    <div>
+        <h1>Signup</h1>
 
-        <br>
-        <br>
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName" placeholder="Last Name">
+        <form id="signupInput">
+            <br>
+            <label for="firstName">First Name</label><br>
+            <input type="text" name="firstName" id="firstName" placeholder="First Name">
 
-        <br>
-        <br>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Email">
+            <br>
+            <br>
+            <br>
+            <label for="lastName">Last Name</label><br>
+            <input type="text" name="lastName" id="lastName" placeholder="Last Name">
 
-        <br>
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Password">
+            <br>
+            <br>
+            <br>
+            <label for="email">Email</label><br>
+            <input type="email" name="email" id="email" placeholder="Email">
 
-        <br>
-        <br>
+            <br>
+            <br>
+            <br>
+            <label for="password">Password</label><br>
+            <input type="password" name="password" id="password" placeholder="Password">
 
-        <button onclick="userName()" type="submit">Signup</button>
+            <br>
+            <br>
+            <br>
 
-        <br>
-        <br>
-    </form>
+            <button onclick="userName()" type="submit">Signup</button>
+
+            <br>
+            <br>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -70,7 +79,7 @@
         })
     </script>
 
-<script src="updateName.js"></script>
+    <script src="updateName.js"></script>
 </body>
 
 </html>
