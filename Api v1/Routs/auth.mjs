@@ -17,7 +17,7 @@ let router = express.Router();
 
 router.post('/login', async (req, res, next) => {
 
-    if (!req.body?.email || !req.body?.password) {
+    if (!req.body?.email || !req.body?.password) {  // if user miss a parameter
         res.status(403).send("Required parameter missing")
         return
     }
@@ -28,20 +28,20 @@ router.post('/login', async (req, res, next) => {
         let result = await userCollection.findOne({ email: req.body.email });
         console.log("result", result)
 
-        if (!result) { // user not found
+        if (!result) { // if user is not in DATA base so ( user not found )
 
             res.status(401).send({
                 message: "email or password incorret"
             });
             return;
 
-        } else { // user found
+        } else { // if user alrady in DATA base so ( user found )
 
             const hashedPasswordMetch = await verifyHash(req.body.password, result.password)
 
             if (hashedPasswordMetch) {
 
-                const token = jwt.sign({  // JWT token 
+                const token = jwt.sign({  // JWT token  validation. 
                     isAdmin: false,
                     firstName: result.firstName,
                     lastName: result.lastName,
@@ -54,7 +54,7 @@ router.post('/login', async (req, res, next) => {
                     expires: new Date(Date.now() + 720 * 60 * 60 * 1000)
                 })
 
-                res.send({
+                res.send({  // after user login
                     message: "Login successful",
                     token: token
                 });
