@@ -1,8 +1,9 @@
 body {
-    background: linear-gradient(-40deg, rgb(12, 3, 61),
+    /* background: linear-gradient(-40deg, rgb(12, 3, 61),
             rgb(5, 51, 63), rgb(17, 69, 82), rgb(32, 80, 48), rgb(2, 93, 116));
     background-size: 400% 400%;
-    animation: bg 12s ease infinite;
+    animation: bg 12s ease infinite; */
+    background-color: rgba(0, 0, 0, 0.445);
 }
 
 @keyframes bg {
