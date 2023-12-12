@@ -73,8 +73,6 @@ router.post('/login', async (req, res, next) => {
         res.status(500).send("Server error, please try leter")
     }
 
-
-    // console.log('MongoDb Login', new Date);
 })
 
 //-----------------------------------------------------------------------------------------------------
@@ -129,8 +127,6 @@ router.post('/signup', async (req, res, next) => {
         console.log(e);
         res.status(500).send("Server error, please try leter")
     }
-
-    // console.log('MongoDb SignUp ', new Date);
 })
 
 export default router
